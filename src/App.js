@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled, { css, createGlobalStyle, keyframes } from "styled-components";
+import ReactGA from "react-ga";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { SearchBox } from "./SearchBox";
 import { ResultsBox } from "./ResultsBox";
 import { GitHub, Info, Close } from "react-bytesize-icons";
 
-const { REACT_APP_PUTIO_CLIENT_ID } = process.env;
+const { NODE_ENV, REACT_APP_PUTIO_CLIENT_ID } = process.env;
 
 const PUTIO_URL = `https://api.put.io/v2/oauth2/authenticate?client_id=${REACT_APP_PUTIO_CLIENT_ID}&response_type=token&redirect_uri=${
   window.location.origin
@@ -149,9 +150,13 @@ export function App() {
   const [showInfo, setShowInfo] = useState(false);
   const [token, setToken] = useLocalStorage("token", putioToken);
 
-  // HACK: Using `account/info` to check if token is valid
-  // there must be a better way to do this...
   useEffect(() => {
+    if (NODE_ENV === "production") {
+      ReactGA.initialize("UA-28314827-6");
+    }
+
+    // HACK: Using `account/info` to check if token is valid
+    // there must be a better way to do this...
     fetch(`https://api.put.io/v2/account/info?oauth_token=${token}`).then(res => {
       if (res.status === 401) {
         setToken(undefined);
@@ -167,9 +172,18 @@ export function App() {
 
       setLoading(true);
       setResults([]);
+
       search(term).then(results => {
         setResults(results);
         setLoading(false);
+
+        if (NODE_ENV === "production") {
+          ReactGA.event({
+            category: "User",
+            action: "Search",
+            value: term,
+          });
+        }
       });
     },
     [term]
