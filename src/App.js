@@ -181,7 +181,7 @@ export function App() {
           ReactGA.event({
             category: "User",
             action: "Search",
-            value: term,
+            label: term,
           });
         }
       });
