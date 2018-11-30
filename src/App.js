@@ -150,8 +150,6 @@ export function App() {
   const [showInfo, setShowInfo] = useState(false);
   const [token, setToken] = useLocalStorage("token", putioToken);
 
-  console.log("NODE_ENV", NODE_ENV);
-
   useEffect(() => {
     if (NODE_ENV === "production") {
       ReactGA.initialize("UA-28314827-6");
