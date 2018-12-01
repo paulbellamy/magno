@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css, createGlobalStyle, keyframes } from "styled-components";
 import ReactGA from "react-ga";
 import { useLocalStorage } from "./hooks/useLocalStorage";
+import { Magnet } from "./Magnet";
 import { SearchBox } from "./SearchBox";
 import { ResultsBox } from "./ResultsBox";
 import { GitHub, Info, Close } from "react-bytesize-icons";
@@ -80,13 +81,11 @@ const Header = styled.header`
 
 const Magno = styled.span`
   display: inline-block;
-  width: 0;
-  height: 0;
-  position: relative;
-  top: -10px;
+  width: 30px;
+  height: 30px;
   transform: ${props => (props.loading ? "rotate(-90deg)" : "rotate(0deg)")};
   transition: transform 400ms;
-  transform-origin: left center;
+  transform-origin: center center;
   animation: ${props =>
     props.loading
       ? css`
@@ -94,8 +93,8 @@ const Magno = styled.span`
         `
       : "none"};
 
-  @media (min-width: 40em) {
-    top: -16px;
+  svg {
+    width: 100%;
   }
 `;
 
@@ -192,7 +191,9 @@ export function App() {
   return (
     <React.Fragment>
       <Header>
-        <Magno loading={loading}>🧲</Magno>
+        <Magno loading={loading}>
+          <Magnet />
+        </Magno>
         <Links>
           {!token && <Link href={PUTIO_URL}>Sign in with put.io</Link>}
           <Link href="https://github.com/peduarte/magno">
@@ -224,7 +225,9 @@ export function App() {
             <a href="https://twitter.com/philhawksworth" rel="nofollow">
               Phil Hawksowrth
             </a>
-            . Lib forked from <a href="https://github.com/ItzBlitz98/torrentflix">torrentflix</a>
+            . Lib forked from <a href="https://github.com/ItzBlitz98/torrentflix">torrentflix</a>.
+            Magnet icon by{" "}
+            <a href="https://thenounproject.com/search/?q=magnet&amp;i=33272">Matt Brooks</a>
           </p>
           <p>
             Made by <a href="https://ped.ro">Pedro</a> 👊
