@@ -81,8 +81,8 @@ const Header = styled.header`
 
 const Magno = styled.span`
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
   transform: ${props => (props.loading ? "rotate(-90deg)" : "rotate(0deg)")};
   transition: transform 400ms;
   transform-origin: center center;

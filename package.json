@@ -10,6 +10,7 @@
     "react-dom": "^16.7.0-alpha",
     "react-dom-confetti": "^0.0.10",
     "react-ga": "^2.5.6",
+    "react-pose": "^4.0.2",
     "react-scripts": "2.1.1",
     "react-textfit": "^1.1.0",
     "styled-components": "^4.1.2"
