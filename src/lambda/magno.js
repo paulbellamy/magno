@@ -1,12 +1,13 @@
 import lime from "./lib/lime.js";
 import eztv from "./lib/eztv.js";
-import yts from "./lib/yts.js";
 
 export function handler(event, context, callback) {
   const searchStr = event.queryStringParameters["q"];
 
-  Promise.all([lime.search(searchStr), yts.search(searchStr), eztv.search(searchStr)]).then(
-    results => {
+  Promise.all([lime.search(searchStr), eztv.search(searchStr)])
+    .then(results => {
+      console.log(results);
+
       const allResults = [].concat(...results);
       const sortedResults = allResults.sort((a, b) => b.seeds - a.seeds);
 
@@ -15,6 +16,6 @@ export function handler(event, context, callback) {
         statusCode: 200,
         body: JSON.stringify(sortedResults),
       });
-    }
-  );
+    })
+    .catch(error => console.log(`error ${error}`));
 }
