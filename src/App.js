@@ -242,5 +242,8 @@ export function App() {
 }
 
 function search(term) {
-  return fetch(`/.netlify/functions/magno?q=${term}`).then(response => response.json());
+  return fetch(`/.netlify/functions/magno?q=${term}`).then(response => {
+    console.log(`response ${response}`);
+    return response.json();
+  });
 }
