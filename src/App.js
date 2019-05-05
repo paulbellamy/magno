@@ -142,8 +142,10 @@ if (putioToken) {
   window.history.pushState("", "", "/");
 }
 
+const params = parseQueryString(window.location.search);
+
 export function App() {
-  const [term, setTerm] = useState();
+  const [term, setTerm] = useState(params.q);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -234,7 +236,7 @@ export function App() {
           </p>
         </InfoBox>
       )}
-      <SearchBox onSubmit={term => setTerm(term)} />
+      <SearchBox initial={term} onSubmit={term => setTerm(term)} />
       <ResultsBox results={results} token={token} />
       <GlobalStyle />
     </React.Fragment>
@@ -246,4 +248,19 @@ function search(term) {
     console.log(`response ${response}`);
     return response.json();
   });
+}
+
+function parseQueryString(queryString) {
+  if (!queryString || queryString.length < 1) {
+    return {};
+  }
+  const params = {};
+  queryString
+    .substring(1)
+    .split("&")
+    .forEach(segment => {
+      const temp = segment.split("=");
+      params[temp[0]] = temp[1];
+    });
+  return params;
 }

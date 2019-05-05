@@ -14,8 +14,8 @@ const Input = styled.input`
 const KEY_ENTER = 13;
 const isIos = () => !!window.navigator.userAgent.match(/iPad|iPhone/i);
 
-export function SearchBox({ onSubmit }) {
-  const [term, setTerm] = useState(isIos() ? "Search..." : "");
+export function SearchBox({ initial, onSubmit }) {
+  const [term, setTerm] = useState(initial || isIos() ? "Search..." : "");
 
   return (
     <React.Fragment>
